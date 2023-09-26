@@ -1,7 +1,6 @@
-from werkzeug.routing import Map, Rule, NotFound, RequestRedirect
+from werkzeug.routing import Map, Rule, NoMatch, RequestRedirect
 import dash
-import dash_html_components as html
-import dash_core_components as dcc
+from dash import dcc, html
 
 
 class Router:
@@ -53,7 +52,7 @@ class Router:
         try:
             endpoint, kwards = ma.match(path)
             return self.view_functions[endpoint](**kwards, **kwargs)
-        except NotFound:
+        except NoMatch:
             return self.not_found
 
     def add_url_rule(self, rule, endpoint=None, view_func=None, **options):
